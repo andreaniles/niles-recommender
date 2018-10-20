@@ -1,13 +1,15 @@
 require 'csv'
+require Rails.root.join('app', 'services', 'recommender').to_s
+
 
 class ApiController < ActionController::Base
   protect_from_forgery with: :exception
 
   def scenarios
     scenarios = scenario_hash.keys.select { |id| params[id].present? }
-    ratings = params.slice(*scenarios)
-    
-    render json: ratings
+    ratings = params.slice(*scenarios).to_h
+    version = params[:anxtype] || 1
+    render json: Recommender.new(ratings, version, 'exposurerecommender.R').recommendation
   end
 
   private
