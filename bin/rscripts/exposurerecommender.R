@@ -15,7 +15,8 @@ ratings <- read.csv(ratings, header=T, sep=",", colClasses=c("character", "numer
 
 #version<-1
 #ratings <- read.csv("scenariorating_test.csv", header=T, sep=",", colClasses=c("character", "numeric"))
-allscenarios <- read.csv(paste(root_path, "/config/scenarios&id.csv"), header=T, sep=",", colClasses=c("character", "character"))
+allscenarios_file <- paste(root_path, "/config/scenarios&id.csv", sep='')
+allscenarios <- read.csv(allscenarios_file, header=T, sep=",", colClasses=c("character", "character"))
 
 ratedscenarios <- ratings$id
 
