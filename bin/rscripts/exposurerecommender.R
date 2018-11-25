@@ -9,13 +9,15 @@ ratings = args[2] ## full path to CSV file with 2 columns (ID and RATING)
 version = args[3] 
 numbertorecommend = if(length(args) < 4) 42 else as.integer(args[4])
 
-ratings <- read.csv(ratings, header=T, sep=",", colClasses=c("character", "numeric"))
+ratings <- read.csv(ratings, header=T, sep=",", colClasses=c("character", "numeric", "numeric"))
 
-#setwd("~/Dropbox/Post-Doc/Projects/Brave/AppDevelopment/Recommender")
+#setwd("~/Dropbox/Post-Doc/Projects/Brave/AppDevelopment/Recommender") ## comment out
 
-#version<-1
-#ratings <- read.csv("scenariorating_test.csv", header=T, sep=",", colClasses=c("character", "numeric"))
+#version<-1 ## comment out
+#ratings <- read.csv("scenariorating_test.csv", header=T, sep=",", colClasses=c("character", "numeric")) ## comment out
 allscenarios_file <- paste(root_path, "/config/scenarios&id.csv", sep='')
+
+#allscenarios <- read.csv("scenarios&id.csv", header=T, sep=",", colClasses=c("character", "character")) ## comment out
 allscenarios <- read.csv(allscenarios_file, header=T, sep=",", colClasses=c("character", "character"))
 
 ratedscenarios <- ratings$id
