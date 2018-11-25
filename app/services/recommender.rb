@@ -10,7 +10,6 @@ class Recommender
     write_ratings_to_temp_file
     result =
       `Rscript #{Rails.root}/bin/rscripts/#{@r_script_file_name} #{Rails.root} #{file_name} #{@version}`
-    puts result
     parse_result(result)
   end
 
@@ -20,7 +19,6 @@ class Recommender
     result = r_script_output.
              gsub(/\[\d+|\,|\] /, '').delete('"').split(/[ \n]+/).
              map(&:strip).select(&:present?)
-    puts result
     result = result.in_groups_of(2) if @mode == 3
     result[0..-1]
   end
@@ -35,8 +33,8 @@ class Recommender
 
   def write_ratings_to_temp_file
     CSV.open(file_name, 'w') do |csv|
-      csv << %w(id rating)
-      @ratings.each { |word, rating| csv << [word, rating] }
+      csv << %w(id anx avd)
+      @ratings.each { |word, rating| csv << [word, *rating.map(&:presence)] }
     end
   end
 end
