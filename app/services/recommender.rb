@@ -16,11 +16,11 @@ class Recommender
   private
 
   def parse_result(r_script_output)
-    result = r_script_output.
-             gsub(/\[\d+|\,|\] /, '').delete('"').split(/[ \n]+/).
-             map(&:strip).select(&:present?)
-    result = result.in_groups_of(2) if @mode == 3
-    result[0..-1]
+    rows = r_script_output.split("\n")
+    result = rows[1..-1].map do |row|
+      row.split(/ +/)[-3..-1].map { |e| JSON.parse(e) }
+    end
+    %w[low medium high].zip(result.transpose).to_h.to_json
   end
 
   def sess_token
