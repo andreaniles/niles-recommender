@@ -7,7 +7,7 @@ args <- commandArgs(trailingOnly=TRUE)
 root_path = args[1]
 ratings = args[2] ## full path to CSV file with 2 columns (ID and RATING)
 version = args[3] 
-numbertorecommend = if(length(args) < 4) 42 else as.integer(args[4])
+numbertorecommend = if(length(args) < 4) 60 else as.integer(args[4])
 
 ratings <- read.csv(ratings, header=T, sep=",", colClasses=c("character", "numeric", "numeric"))
 
@@ -36,17 +36,17 @@ if(version==1)
 disorder_spec_scen <- as.matrix(allscenarios[grep(anxtype, allscenarios[,1]),1])
 
 otherscenarios <- disorder_spec_scen[sample(nrow(disorder_spec_scen), 
-                                            size=32, replace=F),1]
+                                            size=60, replace=F),1]
 
-recsall <- c(ratedscenarios,otherscenarios)
+recsall <- otherscenarios
 
 recs <- head(as.matrix(recsall), n=numbertorecommend)
 
-# recs <- matrix(recs,nrow=14)
+recs <- matrix(recs,nrow=20,ncol=3)
 
-# colnames(recs) <- c("low", "medium", "high")
+colnames(recs) <- c("low", "medium", "high")
 
-prmatrix(recs, collab=rep("", 2))
+prmatrix(recs)
 
 ###############
 executethisblock <- FALSE
